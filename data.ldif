@@ -1,0 +1,20 @@
+angetype: add
+cn: demo
+gidNumber: 1000
+objectClass: posixGroup
+
+dn: uid=demo,dc=spg,dc=by
+changetype: add
+uid: demo
+cn: demo
+sn: demo
+objectClass: inetOrgPerson
+objectClass: posixAccount
+loginShell: /bin/bash
+homeDirectory: /home/demo
+uidNumber: 1000
+gidNumber: 1000
+#i9P2vqudq94siTf9
+userPassword: {SSHA}5s+S4kkkzYB5kTaBzNeJxfMDiQcyStBE
+mail: demo@spg.by
+gecos: Demo User

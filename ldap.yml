@@ -1,0 +1,42 @@
+on: "3"
+services:
+
+  ldap:
+    image: osixia/openldap:1.1.9
+    hostname: ldap
+    environment:
+      - LDAP_READONLY_USER=true
+      - LDAP_ORGANISATION=spg
+      - LDAP_DOMAIN=spg.by
+      - LDAP_ADMIN_PASSWORD=vftm4xsA7Shy7pDs
+    entrypoint:
+#      - /bin/bash
+#      - -c
+#      - 'while true; do :;done;'
+      - /container/tool/run
+      - --copy-service
+    networks:
+      - backend
+    cap_add:
+      - ALL
+    volumes:
+      - ./data.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/data.ldif
+    ports:
+      - 6636:636
+
+  admin.ldap:
+    image: osixia/phpldapadmin:0.7.0
+    hostname: admin.ldap.spg.by
+    links:
+      - ldap
+    depends_on:
+      - ldap
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=ldap
+    ports:
+      - 6443:443
+    networks:
+      - backend
+
+networks:
+  backend:
