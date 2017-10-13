@@ -20,7 +20,7 @@
       <filter></filter>
     </groupMembershipStrategy>
     <managerDN>cn=admin,dc=ldap,dc=example,dc=com</managerDN>
-    <managerPassword>{AQAAABAAAAAQPBdBFN7oXsePvZtfdFEqhy41L0399ZmliVIte+Rd0aA=}</managerPassword>
+    <managerPassword>admin123</managerPassword>
     <disableMailAddressResolver>false</disableMailAddressResolver>
     <displayNameAttributeName>displayName</displayNameAttributeName>
     <mailAddressAttributeName>mail</mailAddressAttributeName>

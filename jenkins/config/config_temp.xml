@@ -9,24 +9,7 @@
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="hudson.security.AuthorizationStrategy$Unsecured"/>
-  <securityRealm class="hudson.security.LDAPSecurityRealm" plugin="ldap@1.12">
-    <server>ldap://ldap:389</server>
-    <rootDN>dc=ldap,dc=example,dc=com</rootDN>
-    <inhibitInferRootDN>false</inhibitInferRootDN>
-    <userSearchBase>ou=people</userSearchBase>
-    <userSearch>uid={0}</userSearch>
-    <groupSearchBase>ou=groups</groupSearchBase>
-    <groupMembershipStrategy class="jenkins.security.plugins.ldap.FromGroupSearchLDAPGroupMembershipStrategy">
-      <filter></filter>
-    </groupMembershipStrategy>
-    <managerDN>cn=admin,dc=ldap,dc=example,dc=com</managerDN>
-    <managerPassword>{AQAAABAAAAAQPBdBFN7oXsePvZtfdFEqhy41L0399ZmliVIte+Rd0aA=}</managerPassword>
-    <disableMailAddressResolver>false</disableMailAddressResolver>
-    <displayNameAttributeName>displayName</displayNameAttributeName>
-    <mailAddressAttributeName>mail</mailAddressAttributeName>
-    <userIdStrategy class="jenkins.model.IdStrategy$CaseInsensitive"/>
-    <groupIdStrategy class="jenkins.model.IdStrategy$CaseInsensitive"/>
-  </securityRealm>
+  <securityRealm class="hudson.security.SecurityRealm$None"/>
   <disableRememberMe>false</disableRememberMe>
   <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
   <workspaceDir>${ITEM_ROOTDIR}/workspace</workspaceDir>

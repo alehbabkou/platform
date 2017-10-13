@@ -1,12 +1,12 @@
-#
-# Creates a docker container with Nexus Artifact Repository
-#
 FROM       centos:centos7
 
+MAINTAINER Sonatype <cloud-ops@sonatype.com>
 
 LABEL vendor=Sonatype \
   com.sonatype.license="Apache License, Version 2.0" \
   com.sonatype.name="Nexus Repository Manager base image"
+
+USER root
 
 ARG NEXUS_VERSION=3.6.0-02
 ARG NEXUS_DOWNLOAD_URL=https://download.sonatype.com/nexus/3/nexus-${NEXUS_VERSION}-unix.tar.gz
@@ -61,6 +61,11 @@ RUN useradd -r -u 200 -m -c "nexus role account" -d ${NEXUS_DATA} -s /bin/false 
   && ln -s ${NEXUS_DATA} ${SONATYPE_WORK}/nexus3 \
   && chown -R nexus:nexus ${NEXUS_DATA}
 
+#script for ldap
+#ADD script.sh /root/script.sh
+COPY ldapConfig.groovy /opt/sonatype/ldapConfig.groovy
+ADD provision-ldap.sh /opt/sonatype/provision-ldap.sh
+
 VOLUME ${NEXUS_DATA}
 
 EXPOSE 8081
@@ -69,17 +74,4 @@ WORKDIR ${NEXUS_HOME}
 
 ENV INSTALL4J_ADD_VM_PARAMS="-Xms1200m -Xmx1200m -XX:MaxDirectMemorySize=2g -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs"
 
-#ENV CONTEXT_PATH /
-#ENV MAX_HEAP 768m
-#ENV MIN_HEAP 256m
-#ENV JAVA_OPTS -server -XX:MaxPermSize=192m -Djava.net.preferIPv4Stack=true
-#ENV LAUNCHER_CONF ./conf/jetty.xml ./conf/jetty-requestlog.xml
-#CMD java \
-#  -Dnexus-work=${SONATYPE_WORK} -Dnexus-webapp-context-path=${CONTEXT_PATH} \
-#  -Xms${MIN_HEAP} -Xmx${MAX_HEAP} \
-#  -cp 'conf/:lib/*' \
-#  ${JAVA_OPTS} \
-#  org.sonatype.nexus.bootstrap.Launcher ${LAUNCHER_CONF}
-
 CMD ["bin/nexus", "run"]
-
